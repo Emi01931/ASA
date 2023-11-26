@@ -99,8 +99,14 @@ public class ASDR implements Parser{
             i5();
         }else if(preanalisis.tipo == TipoToken.FROM){
             pila.pop();
-            pila.push("P");
-            i1();
+            
+            if(pila.peek().equals(TipoToken.DISTINCT)){
+                pila.push("P");
+                i12();
+            }else if(pila.peek().equals(TipoToken.SELECT)){
+                pila.push("P");
+                i1();
+            }
         }
     }
     
@@ -136,11 +142,23 @@ public class ASDR implements Parser{
             if(pila.peek().equals(TipoToken.COMA)){
                 pila.pop();
                 pila.pop();
-                pila.push("A");
-                i1();
+                
+                if(pila.peek().equals(TipoToken.DISTINCT)){
+                    pila.push("A");
+                    i12();
+                }else if(pila.peek().equals(TipoToken.SELECT)){
+                    pila.push("A");
+                    i1();
+                }
             }else{
-                pila.push("A");
-                i1();
+                
+                if(pila.peek().equals(TipoToken.DISTINCT)){
+                    pila.push("A");
+                    i12();
+                }else if(pila.peek().equals(TipoToken.SELECT)){
+                    pila.push("A");
+                    i1();
+                }
             }
         }
     }
@@ -164,8 +182,14 @@ public class ASDR implements Parser{
         if(preanalisis.tipo == TipoToken.FROM){
             pila.pop();
             pila.pop();
-            pila.push("A1");
-            i1();
+            
+            if(pila.peek().equals(TipoToken.DISTINCT)){
+                pila.push("A1");
+                i12();
+            }else if(pila.peek().equals(TipoToken.SELECT)){
+                pila.push("A1");
+                i11();
+            }
         }
     }
     
@@ -287,7 +311,7 @@ public class ASDR implements Parser{
         if(preanalisis.tipo == TipoToken.EOF){
             //System.out.print("\n\tIf para el i22, con espacio");
             if(pila.peek().equals("T1") == false){
-               System.out.print("\n\tPara el i22, con espacio");
+               //System.out.print("\n\tPara el i22, con espacio");
                i22();
             }       
         }
