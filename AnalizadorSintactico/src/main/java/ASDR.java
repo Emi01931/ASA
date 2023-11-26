@@ -55,7 +55,7 @@ public class ASDR implements Parser{
             i2();
             
         }else if(preanalisis.tipo == TipoToken.IDENTIFICADOR){
-            match(TipoToken.FROM);
+            match(TipoToken.IDENTIFICADOR);
             i9();
         }else if(pila.peek().equals("D")){
             //match(TipoToken.FROM);
@@ -97,6 +97,10 @@ public class ASDR implements Parser{
         if(preanalisis.tipo == TipoToken.COMA){
             pila.push(preanalisis.tipo);
             i5();
+        }else if(preanalisis.tipo == TipoToken.FROM){
+            pila.pop();
+            pila.push("P");
+            i1();
         }
     }
     
@@ -112,10 +116,10 @@ public class ASDR implements Parser{
     
     private void i6(){
         System.out.print("\n6: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
-        if(preanalisis.tipo == TipoToken.IDENTIFICADOR){
+        if(pila.peek().equals(TipoToken.IDENTIFICADOR)){
             pila.pop();
             pila.push("A2");
-            i6();
+            i9();
         }
     }
     
@@ -143,9 +147,13 @@ public class ASDR implements Parser{
     
     private void i9(){
         System.out.print("\n9: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
-        if(preanalisis.tipo == TipoToken.IDENTIFICADOR){
-            match(TipoToken.IDENTIFICADOR);
+        
+        if(preanalisis.tipo == TipoToken.IDENTIFICADOR && pila.peek().equals("A2") == false){
+            //match(TipoToken.IDENTIFICADOR);
             i6();
+        }else if(preanalisis.tipo == TipoToken.IDENTIFICADOR && pila.peek().equals("A2") == true){
+            match(TipoToken.IDENTIFICADOR);
+            i10();
         }else if(preanalisis.tipo == TipoToken.FROM){
             i7();
         }
@@ -157,7 +165,7 @@ public class ASDR implements Parser{
             pila.pop();
             pila.pop();
             pila.push("A1");
-            i9();
+            i1();
         }
     }
     
@@ -268,9 +276,9 @@ public class ASDR implements Parser{
         }
         
         if(preanalisis.tipo == TipoToken.IDENTIFICADOR){
-            System.out.print("\n\tIf para el i22");
+            //System.out.print("\n\tIf para el i22");
             if(pila.peek().equals("T1") == false){
-               System.out.print("\n\tPara el i22");
+               //System.out.print("\n\tPara el i22");
                i22();
             }
             
