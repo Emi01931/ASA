@@ -289,15 +289,29 @@ public class ASDR implements Parser{
     
     private void i20(){
         System.out.print("\n20: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        
+        if(preanalisis.tipo == TipoToken.EOF){
+            pila.pop();
+            pila.pop();
+            pila.push("T1");
+            i17();
+        }
     }
     
     private void i21(){
         System.out.print("\n21: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        
+        if(preanalisis.tipo == TipoToken.EOF){
+            pila.pop();
+            pila.push("T2");
+            i19();
+        }
     }
     
     private void i22(){
         System.out.print("\ni22: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
-        if(pila.peek().equals("T2")){
+        
+        if(preanalisis.tipo == TipoToken.EOF){
             pila.push("T2");
             i19();
         }
