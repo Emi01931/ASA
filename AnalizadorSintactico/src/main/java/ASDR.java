@@ -23,7 +23,7 @@ public class ASDR implements Parser{
         }
         
         if(preanalisis.tipo == TipoToken.EOF && !hayErrores){
-            System.out.println("\nConsulta correcta");
+            //System.out.println("\nConsulta correcta");
             return  true;
         }else {
             System.out.println("\nSe encontraron errores");
@@ -103,7 +103,7 @@ public class ASDR implements Parser{
             if(pila.peek().equals(TipoToken.DISTINCT)){
                 pila.push("P");
                 i12();
-            }else if(pila.peek().equals(TipoToken.SELECT)){
+            }else{
                 pila.push("P");
                 i1();
             }
@@ -115,8 +115,18 @@ public class ASDR implements Parser{
         if(preanalisis.tipo == TipoToken.IDENTIFICADOR){
             pila.push(preanalisis.tipo);
             i9();
-        }else if(pila.peek().equals("A1")){
-            i8();
+        }else if(pila.peek().equals("A1") && preanalisis.tipo == TipoToken.COMA){
+            pila.pop();
+            //pila.push("A");
+            match(TipoToken.COMA);
+            i9();
+        }else{
+            String aux1 = (String)pila.pop();
+            String aux2 = (String)pila.pop();
+            
+            if(pila.peek().equals("A")){
+                i1();
+            }
         }
     }
     
@@ -131,6 +141,7 @@ public class ASDR implements Parser{
     
     private void i7(){
         System.out.print("\n7: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        pila.pop();
         pila.push("A2");
         i9();
     }
@@ -138,10 +149,16 @@ public class ASDR implements Parser{
     private void i8(){
         System.out.print("\n8: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         String aux = (String) pila.pop();
+        System.out.print("\n8.2: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         if(preanalisis.tipo == TipoToken.FROM){
             if(pila.peek().equals(TipoToken.COMA)){
                 pila.pop();
+                System.out.print("\n8 pop1: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+                if(pila.peek().equals(TipoToken.SELECT)){
+                    pila.push("X");
+                }
                 pila.pop();
+                System.out.print("\n8 pop2: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
                 
                 if(pila.peek().equals(TipoToken.DISTINCT)){
                     pila.push("A");
@@ -158,6 +175,9 @@ public class ASDR implements Parser{
                 }else if(pila.peek().equals(TipoToken.SELECT)){
                     pila.push("A");
                     i1();
+                }else if(aux.equals("A1")){
+                    pila.push("A");
+                    i1();
                 }
             }
         }
@@ -166,14 +186,22 @@ public class ASDR implements Parser{
     private void i9(){
         System.out.print("\n9: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
-        if(preanalisis.tipo == TipoToken.IDENTIFICADOR && pila.peek().equals("A2") == false){
+        if(preanalisis.tipo == TipoToken.IDENTIFICADOR && pila.peek().equals("A2")){
             //match(TipoToken.IDENTIFICADOR);
-            i6();
-        }else if(preanalisis.tipo == TipoToken.IDENTIFICADOR && pila.peek().equals("A2") == true){
-            match(TipoToken.IDENTIFICADOR);
             i10();
-        }else if(preanalisis.tipo == TipoToken.FROM){
+        }else if(preanalisis.tipo == TipoToken.IDENTIFICADOR){
+            match(TipoToken.IDENTIFICADOR);
+            i6();
+        }else  if(pila.peek().equals("A2") && preanalisis.tipo == TipoToken.FROM){
+            pila.pop();
+            pila.push("A1");
+            i1();
+        }if(preanalisis.tipo == TipoToken.FROM){
             i7();
+        }else if(preanalisis.tipo == TipoToken.COMA){
+            pila.pop();
+            pila.push("A1");
+            i5();
         }
     }
     
@@ -277,7 +305,10 @@ public class ASDR implements Parser{
             i18();
         }
         
-        if(pila.peek().equals("T")){
+        if(pila.peek().equals("T") && preanalisis.tipo == TipoToken.COMA){
+            match(TipoToken.COMA);
+            i15();
+        }else if(pila.peek().equals("T")){
             i14();
         }
     }
@@ -300,18 +331,12 @@ public class ASDR implements Parser{
         }
         
         if(preanalisis.tipo == TipoToken.IDENTIFICADOR){
-            //System.out.print("\n\tIf para el i22");
             if(pila.peek().equals("T1") == false){
-               //System.out.print("\n\tPara el i22");
                i22();
             }
             
-        }
-        
-        if(preanalisis.tipo == TipoToken.EOF){
-            //System.out.print("\n\tIf para el i22, con espacio");
+        }else if(preanalisis.tipo == TipoToken.EOF || preanalisis.tipo == TipoToken.COMA){
             if(pila.peek().equals("T1") == false){
-               //System.out.print("\n\tPara el i22, con espacio");
                i22();
             }       
         }
@@ -322,6 +347,14 @@ public class ASDR implements Parser{
         
         if(preanalisis.tipo == TipoToken.EOF && pila.peek().equals("T") == false){
             pila.pop();
+            pila.pop();
+            pila.push("T1");
+            i17();
+        }else if(preanalisis.tipo == TipoToken.COMA && pila.peek().equals("T") == false){
+            pila.pop();
+            if(pila.peek().equals(TipoToken.FROM)){
+                pila.push("X");
+            }
             pila.pop();
             pila.push("T1");
             i17();
@@ -344,8 +377,15 @@ public class ASDR implements Parser{
         if(preanalisis.tipo == TipoToken.EOF && pila.peek().equals("T") == false){
             pila.push("T2");
             i19();
+        }else if(preanalisis.tipo == TipoToken.COMA && pila.peek().equals(TipoToken.IDENTIFICADOR)){
+            if(pila.peek().equals(TipoToken.FROM)){
+                pila.push("X");
+            }
+            pila.pop();
+            pila.push("T2");
+            //match(TipoToken.COMA);
+            i19();
         }
-        
     }
     
 
