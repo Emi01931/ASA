@@ -44,7 +44,7 @@ public class ASDR implements Parser{
         if(hayErrores)
             return;
 
-        //System.out.print("\n1: Pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n1: Pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
         if(preanalisis.tipo == TipoToken.DISTINCT){
             match(TipoToken.DISTINCT);
@@ -58,16 +58,12 @@ public class ASDR implements Parser{
             match(TipoToken.IDENTIFICADOR);
             i9();
         }else if(pila.peek().equals("D")){
-            //match(TipoToken.FROM);
             i11();
         }else if(pila.peek().equals("P")){
-            //match(TipoToken.FROM);
             i3();
         }else if(pila.peek().equals("A")){
-            //match(TipoToken.FROM);
             i4();
         }else if(pila.peek().equals("A1")){
-            //match(TipoToken.FROM);
             i8();
         }
         else{
@@ -77,14 +73,14 @@ public class ASDR implements Parser{
     }
     
     private void i2(){
-        //System.out.print("\n2: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n2: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         pila.pop();
         pila.push("D");
         i1();
     }
     
     private void i3(){
-        //System.out.print("\n3: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n3: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         if(pila.peek().equals("P")){
             pila.pop();
             pila.push("D");
@@ -93,7 +89,7 @@ public class ASDR implements Parser{
     }
     
     private void i4(){
-        //System.out.print("\n4: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n4: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         if(preanalisis.tipo == TipoToken.COMA){
             pila.push(preanalisis.tipo);
             i5();
@@ -111,7 +107,7 @@ public class ASDR implements Parser{
     }
     
     private void i5(){
-        //System.out.print("\n5: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n5: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         if(preanalisis.tipo == TipoToken.IDENTIFICADOR){
             pila.push(preanalisis.tipo);
             i9();
@@ -131,7 +127,7 @@ public class ASDR implements Parser{
     }
     
     private void i6(){
-        //System.out.print("\n6: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n6: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         if(pila.peek().equals(TipoToken.IDENTIFICADOR)){
             pila.pop();
             pila.push("A2");
@@ -140,16 +136,16 @@ public class ASDR implements Parser{
     }
     
     private void i7(){
-        //System.out.print("\n7: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n7: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         pila.pop();
         pila.push("A2");
         i9();
     }
     
     private void i8(){
-        //System.out.print("\n8: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n8: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         String aux = (String) pila.pop();
-        //System.out.print("\n8.2: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n8.2: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         if(preanalisis.tipo == TipoToken.FROM){
             if(pila.peek().equals(TipoToken.COMA)){
                 pila.pop();
@@ -184,7 +180,7 @@ public class ASDR implements Parser{
     }
     
     private void i9(){
-        //System.out.print("\n9: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n9: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
         if(preanalisis.tipo == TipoToken.IDENTIFICADOR && pila.peek().equals("A2")){
             //match(TipoToken.IDENTIFICADOR);
@@ -206,7 +202,7 @@ public class ASDR implements Parser{
     }
     
     private void i10(){
-        //System.out.print("\n10: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n10: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         if(preanalisis.tipo == TipoToken.FROM){
             pila.pop();
             pila.pop();
@@ -222,7 +218,7 @@ public class ASDR implements Parser{
     }
     
     private void i11(){
-        //System.out.print("\n11: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n11: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         if(preanalisis.tipo == TipoToken.FROM){
             match(TipoToken.FROM);
             i17();
@@ -230,7 +226,7 @@ public class ASDR implements Parser{
     }
     
     private void i12(){
-        //System.out.print("\n12: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n12: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
         if(preanalisis.tipo == TipoToken.ASTERISCO){
             match(TipoToken.ASTERISCO);
@@ -248,7 +244,7 @@ public class ASDR implements Parser{
     }
     
     private void i13(){
-        //System.out.print("\n13: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        System.out.print("\n13: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         if(pila.peek().equals("P")){
             pila.pop();
             pila.pop();
@@ -258,7 +254,7 @@ public class ASDR implements Parser{
     }
     
     private void i14(){
-        System.out.print("\ni14: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        //System.out.print("\ni14: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
         if(preanalisis.tipo == TipoToken.COMA){
             match(TipoToken.COMA);
@@ -269,7 +265,7 @@ public class ASDR implements Parser{
     }
     
     private void i15(){
-        System.out.print("\n15: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        //System.out.print("\n15: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
         if(preanalisis.tipo == TipoToken.IDENTIFICADOR){
             
@@ -286,7 +282,7 @@ public class ASDR implements Parser{
     }
     
     private void i16(){
-        System.out.print("\n16: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        //System.out.print("\n16: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
         if(pila.peek().equals("T1")){
             pila.pop();
@@ -296,7 +292,7 @@ public class ASDR implements Parser{
     }
     
     private void i17(){
-        System.out.print("\ni17: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        //System.out.print("\ni17: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
         if(preanalisis.tipo == TipoToken.EOF){
             //acc i9();
@@ -317,7 +313,7 @@ public class ASDR implements Parser{
     }
     
     private void i18(){
-        System.out.print("\n18: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        //System.out.print("\n18: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
         if(pila.peek().equals("T1")){
             pila.pop();
@@ -327,7 +323,7 @@ public class ASDR implements Parser{
     }
     
     private void i19(){
-        System.out.print("\ni19: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        //System.out.print("\ni19: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
         if(pila.peek().equals("T2")){
             i20();
@@ -346,7 +342,7 @@ public class ASDR implements Parser{
     }
     
     private void i20(){
-        System.out.print("\n20: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        //System.out.print("\n20: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
         if(preanalisis.tipo == TipoToken.EOF && pila.peek().equals("T") == false){
             pila.pop();
@@ -365,7 +361,7 @@ public class ASDR implements Parser{
     }
     
     private void i21(){
-        System.out.print("\n21: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        //System.out.print("\n21: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
         if(preanalisis.tipo == TipoToken.EOF){
             pila.pop();
@@ -375,7 +371,7 @@ public class ASDR implements Parser{
     }
     
     private void i22(){
-        System.out.print("\ni22: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
+        //System.out.print("\ni22: pila: "+pila.peek()+"\tpreanalisis: "+preanalisis.lexema);
         
         if(preanalisis.tipo == TipoToken.EOF && pila.peek().equals("T") == false){
             pila.push("T2");
