@@ -31,15 +31,11 @@ public class ASDR implements Parser{
         return false;
     }
 
-    // Q -> select D from T
     private void Q(){
         match(TipoToken.SELECT);
         i1();
-        //match(TipoToken.FROM);
-        //T();
     }
 
-    // D -> distinct P | P
     private void i1(){
         if(hayErrores)
             return;
@@ -53,18 +49,13 @@ public class ASDR implements Parser{
         else if (preanalisis.tipo == TipoToken.ASTERISCO) {
             match(TipoToken.ASTERISCO);
             i2();
-            
         }else if(preanalisis.tipo == TipoToken.IDENTIFICADOR){
             match(TipoToken.IDENTIFICADOR);
             i9();
-        }else if(pila.peek().equals("D")){
-            i11();
-        }else if(pila.peek().equals("P")){
-            i3();
-        }else if(pila.peek().equals("A")){
-            i4();
-        }else if(pila.peek().equals("A1")){
-            i8();
+        }else if(pila.peek().equals("D")){i11();
+        }else if(pila.peek().equals("P")){i3();
+        }else if(pila.peek().equals("A")){i4();
+        }else if(pila.peek().equals("A1")){i8();
         }
         else{
             hayErrores = true;
@@ -115,6 +106,7 @@ public class ASDR implements Parser{
             pila.pop();
             //pila.push("A");
             match(TipoToken.COMA);
+            pila.pop();
             i9();
         }else{
             String aux1 = (String)pila.pop();
